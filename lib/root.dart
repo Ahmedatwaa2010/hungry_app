@@ -41,10 +41,13 @@ class _RootState extends State<Root> {
 
       bottomNavigationBar: Container(
         padding: const EdgeInsets.all(10),
-        height: 90,
+        height: 102,
         decoration: BoxDecoration(
           color: PrimaryColors.primaryColor,
-          borderRadius: BorderRadius.all(Radius.circular(30)),
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(20),
+            topRight: Radius.circular(20),
+          ),
         ),
         child: BottomNavigationBar(
           currentIndex: currentIndex,

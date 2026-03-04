@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -34,6 +36,8 @@ class _CustomTextfieldState extends State<CustomTextfield> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      cursorColor: Colors.white,
+      style: TextStyle(color: Colors.white),
       controller: widget.controller,
       // validation for the textfield
       validator: (v) {
@@ -68,6 +72,7 @@ class _CustomTextfieldState extends State<CustomTextfield> {
         ),
         //focus border radius of the textfield
         focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: Colors.white),
           borderRadius: BorderRadius.circular(10),
         ),
       ),

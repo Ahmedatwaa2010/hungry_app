@@ -3,6 +3,22 @@ import 'package:hungry_app/core/network/api_erorr.dart';
 
 class ApiExceptions {
   static ApiErorr handleError(DioError erorr) {
+    final statusCode = erorr.response?.statusCode;
+    final data = erorr.response?.data;
+
+    if (statusCode != null) {
+      if (data is Map<String, dynamic> && data['message'] != null) {
+        return ApiErorr(message: data['message'], stausCode: statusCode);
+      }
+    }
+
+    if (statusCode == 302) {
+      throw ApiErorr(message: 'This Email Already Taken');
+    }
+
+    print(statusCode);
+    print(data);
+
     switch (erorr.type) {
       case DioErrorType.cancel:
         return ApiErorr(message: "Request to API server was cancelled");

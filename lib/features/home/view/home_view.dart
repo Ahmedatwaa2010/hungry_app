@@ -46,7 +46,7 @@ class _HomeViewState extends State<HomeView> {
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [Gap(30), UserHeader(), Gap(30), SearchField()],
+                  children: [Gap(30), UserHeader(), Gap(20), SearchField()],
                 ),
               ),
             ),
@@ -93,7 +93,7 @@ class _HomeViewState extends State<HomeView> {
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
                   mainAxisSpacing: 2,
-                  childAspectRatio: 0.7,
+                  childAspectRatio: 0.65,
                 ),
               ),
             ),

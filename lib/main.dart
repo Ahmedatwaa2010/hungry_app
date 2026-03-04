@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:hungry_app/features/auth/view/signup_view.dart';
+import 'package:hungry_app/splash.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: Colors.white,
         splashColor: Colors.transparent,
       ),
-      home: SignupView(),
+      home: SplachView(),
     );
   }
 }

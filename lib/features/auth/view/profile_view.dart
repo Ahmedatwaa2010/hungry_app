@@ -120,12 +120,13 @@ class _ProfileViewState extends State<ProfileView> {
       ),
 
       bottomSheet: Container(
+        width: double.infinity,
+        height: 120,
         decoration: BoxDecoration(
           color: Colors.white,
 
           borderRadius: BorderRadius.circular(20),
         ),
-        height: 120,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [

@@ -19,10 +19,10 @@ class ProfileBtn extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20),
+      padding: const EdgeInsets.symmetric(horizontal: 10),
       child: Container(
         height: 70,
-        width: 180,
+        width: 175,
         decoration: BoxDecoration(
           color: color ?? Colors.white,
           border: Border.all(color: Colors.black12),

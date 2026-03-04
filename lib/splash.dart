@@ -2,16 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hungry_app/core/constant/app_color.dart';
 import 'package:gap/gap.dart';
+import 'package:hungry_app/features/auth/view/signup_view.dart';
 import 'package:hungry_app/root.dart';
 
-class SplahView extends StatefulWidget {
-  const SplahView({super.key});
+class SplachView extends StatefulWidget {
+  const SplachView({super.key});
 
   @override
-  State<SplahView> createState() => _SplahViewState();
+  State<SplachView> createState() => _SplachViewState();
 }
 
-class _SplahViewState extends State<SplahView>
+class _SplachViewState extends State<SplachView>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _fade;
@@ -22,7 +23,6 @@ class _SplahViewState extends State<SplahView>
   void initState() {
     super.initState();
 
-    // Initialize animation controller
     _controller = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 1750),
@@ -41,7 +41,7 @@ class _SplahViewState extends State<SplahView>
     Future.delayed(const Duration(seconds: 3), () {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (_) => const Root()),
+        MaterialPageRoute(builder: (_) => SignupView()),
       );
     });
   }

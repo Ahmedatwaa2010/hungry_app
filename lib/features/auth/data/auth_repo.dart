@@ -8,20 +8,35 @@ import 'package:hungry_app/features/auth/data/user_model.dart';
 class AuthRepo {
   ApiService apiService = ApiService();
 
-  Future<UserModel?> login(String email, String pass) async {
+  Future<UserModel?> login(String email, String password) async {
     try {
       final response = await apiService.post("/login", {
         "email": email,
-        "password": pass,
+        "password": password,
       });
-      final user = UserModel.fromJson(response["data"]);
-      if (user.token != null) {
-        await PrefHelpers.saveUserToken(user.token!);
+
+      if (response is ApiErorr) {
+        throw response;
       }
 
-      return user;
-    } on DioError catch (e) {
-      throw ApiExceptions.handleError(e);
+      if (response is Map<String, dynamic>) {
+        final msg = response['message'];
+        final code = response['code'];
+        final data = response['data'];
+        if (code != 200 || data == null) {
+          throw ApiErorr(message: msg);
+        } else {
+          final user = UserModel.fromJson(response["data"]);
+          if (user.token != null) {
+            await PrefHelpers.saveUserToken(user.token!);
+          }
+          return user;
+        }
+      } else {
+        throw ApiErorr(message: "Something went wrong from server");
+      }
+    } on DioError catch (erorr) {
+      throw ApiExceptions.handleError(erorr);
     } catch (e) {
       throw ApiErorr(message: e.toString());
     }

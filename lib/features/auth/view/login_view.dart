@@ -19,44 +19,71 @@ class LoginView extends StatefulWidget {
 
 class _LoginViewState extends State<LoginView> {
   TextEditingController emailController = TextEditingController();
-
   TextEditingController passwordController = TextEditingController();
-
   final GlobalKey<FormState> _key = GlobalKey<FormState>();
-
   AuthRepo authRepo = AuthRepo();
+  bool isLoading = false;
 
   Future<void> login() async {
-    try {
-      final user = await authRepo.login(
-        emailController.text.trim(),
-        passwordController.text.trim(),
-      );
+    if (_key.currentState!.validate()) {
+      setState(() {
+        isLoading = true;
+      });
+      try {
+        final user = await authRepo.login(
+          emailController.text,
+          passwordController.text,
+        );
+        setState(() {
+          isLoading = false;
+        });
+        if (user != null) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) {
+                return Root();
+              },
+            ),
+          );
+        }
+      } catch (e) {
+        setState(() {
+          isLoading = false;
+        });
+        String message = "unhandeled erorr in login ";
+        if (e is ApiErorr) {
+          message = e.message;
+        }
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            backgroundColor: Colors.red.shade800,
 
-      if (user != null) {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (n) {
-              return Root();
-            },
+            behavior: SnackBarBehavior.floating,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+
+            content: Row(
+              children: [
+                Icon(Icons.error, color: Colors.white),
+                Gap(10),
+                CustomText(
+                  text: message,
+                  color: Colors.white,
+                  fontSize: 14,
+                  fontWeight: FontWeight.w400,
+                ),
+              ],
+            ),
           ),
         );
+        setState(() {
+          isLoading = false;
+        });
       }
-    } catch (e) {
-      String errorMessage = e.toString();
-
-      if (errorMessage is ApiErorr) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(errorMessage), backgroundColor: Colors.red),
-        );
-      }
-    }
-  }
-
-  validation() {
-    if (_key.currentState!.validate()) {
-      print("object");
+    } else {
+      return;
     }
   }
 
@@ -117,13 +144,14 @@ class _LoginViewState extends State<LoginView> {
                             ),
                             Gap(30),
 
-                            CustomAuthBtn(
-                              text: "Login",
-                              onTap: () {
-                                validation();
-                                login();
-                              },
-                            ),
+                            isLoading
+                                ? CircularProgressIndicator(color: Colors.white)
+                                : CustomAuthBtn(
+                                    text: "Login",
+                                    onTap: () {
+                                      login();
+                                    },
+                                  ),
                             Gap(50),
                             Container(
                               width: double.infinity,
