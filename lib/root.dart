@@ -32,49 +32,55 @@ class _RootState extends State<Root> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: PageView(
-        controller: pageController,
-        physics: const NeverScrollableScrollPhysics(),
-        children: screens,
-      ),
-
-      bottomNavigationBar: Container(
-        padding: const EdgeInsets.all(10),
-        height: 102,
-        decoration: BoxDecoration(
-          color: PrimaryColors.primaryColor,
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(20),
-            topRight: Radius.circular(20),
-          ),
+    return PopScope(
+      canPop: false,
+      child: Scaffold(
+        body: PageView(
+          controller: pageController,
+          physics: const NeverScrollableScrollPhysics(),
+          children: screens,
         ),
-        child: BottomNavigationBar(
-          currentIndex: currentIndex,
-          elevation: 0,
-          backgroundColor: Colors.transparent,
-          type: BottomNavigationBarType.fixed,
-          selectedItemColor: Colors.white,
-          unselectedItemColor: Colors.grey.shade700,
-          onTap: (value) {
-            setState(() {
-              currentIndex = value;
-              pageController.jumpToPage(value);
-            });
-          },
 
-          items: const [
-            BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.shopping_cart),
-              label: 'Cart',
+        bottomNavigationBar: Container(
+          padding: const EdgeInsets.all(10),
+          height: 102,
+          decoration: BoxDecoration(
+            color: PrimaryColors.primaryColor,
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(20),
+              topRight: Radius.circular(20),
             ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.history),
-              label: 'Orders History',
-            ),
-            BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
-          ],
+          ),
+          child: BottomNavigationBar(
+            currentIndex: currentIndex,
+            elevation: 0,
+            backgroundColor: Colors.transparent,
+            type: BottomNavigationBarType.fixed,
+            selectedItemColor: Colors.white,
+            unselectedItemColor: Colors.grey.shade700,
+            onTap: (value) {
+              setState(() {
+                currentIndex = value;
+                pageController.jumpToPage(value);
+              });
+            },
+
+            items: const [
+              BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.shopping_cart),
+                label: 'Cart',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.history),
+                label: 'Orders History',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.person),
+                label: 'Profile',
+              ),
+            ],
+          ),
         ),
       ),
     );
