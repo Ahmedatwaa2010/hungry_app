@@ -11,7 +11,6 @@ class CustomAuthBtn extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onTap,
-
       child: Container(
         height: 55,
         decoration: BoxDecoration(

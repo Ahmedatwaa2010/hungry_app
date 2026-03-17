@@ -6,7 +6,6 @@ class ApiService {
   final DioClient _dioClient = DioClient();
 
   /// CRUD METHODS
-
   /// get
   Future<dynamic> get(String endPoint) async {
     try {

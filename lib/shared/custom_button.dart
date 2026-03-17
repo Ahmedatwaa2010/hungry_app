@@ -10,12 +10,14 @@ class CustomButton extends StatelessWidget {
     this.width,
     this.height,
     this.color,
+    this.redius,
   });
   final String text;
   final Function()? onTap;
   final double? width;
   final double? height;
   final Color? color;
+  final double? redius;
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +28,7 @@ class CustomButton extends StatelessWidget {
         width: width ?? 200,
         decoration: BoxDecoration(
           color: color ?? PrimaryColors.primaryColor,
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: BorderRadius.circular(redius ?? 20),
         ),
         child: Center(
           child: CustomText(

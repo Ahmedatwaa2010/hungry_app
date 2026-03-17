@@ -16,34 +16,66 @@ class CardItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+
     return Card(
       color: Colors.white,
+      elevation: 2,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       child: Padding(
-        padding: const EdgeInsets.all(10.0),
+        padding: const EdgeInsets.all(10),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Image.asset("assets/logo/test.png", width: 180),
+            /// IMAGE
+            Expanded(
+              flex: 5,
+              child: Center(
+                child: Image.network(
+                  image,
+                  fit: BoxFit.contain,
+                  width: double.infinity,
+                ),
+              ),
             ),
-            Gap(10),
-            CustomText(text: title, fontSize: 18, fontWeight: FontWeight.bold),
-            Gap(2),
+
+            const Gap(8),
+
+            /// TITLE
+            CustomText(
+              text: title,
+              fontSize: width * 0.04,
+              fontWeight: FontWeight.bold,
+              maxLines: 1,
+            ),
+
+            const Gap(4),
+
+            /// DESCRIPTION
             CustomText(
               text: subtitle,
-              fontSize: 17,
+              fontSize: width * 0.032,
               fontWeight: FontWeight.w400,
+              maxLines: 2,
             ),
+
+            const Spacer(),
+
+            /// RATING + FAVORITE
             Row(
               children: [
                 CustomText(
+                  color: Colors.black,
                   text: "⭐ $rate",
-                  fontSize: 15,
+                  fontSize: width * 0.035,
                   fontWeight: FontWeight.w400,
                 ),
-                Spacer(),
-                Icon(CupertinoIcons.heart_fill),
+                const Spacer(),
+                const Icon(
+                  CupertinoIcons.heart_fill,
+                  size: 20,
+                  color: Colors.red,
+                ),
               ],
             ),
           ],

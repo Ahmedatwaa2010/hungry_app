@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:gap/gap.dart';
@@ -67,6 +68,13 @@ class _LoginViewState extends State<LoginView> {
   }
 
   @override
+  void initState() {
+    emailController.text = "Venom@gmail.com";
+    passwordController.text = "123456789";
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return PopScope(
       canPop: false,
@@ -126,7 +134,7 @@ class _LoginViewState extends State<LoginView> {
                               Gap(30),
 
                               isLoading
-                                  ? CircularProgressIndicator(
+                                  ? CupertinoActivityIndicator.partiallyRevealed(
                                       color: Colors.white,
                                     )
                                   : CustomAuthBtn(

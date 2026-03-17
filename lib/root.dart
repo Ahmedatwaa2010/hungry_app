@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 import 'package:hungry_app/core/constant/app_color.dart';
 import 'package:hungry_app/features/auth/view/profile_view.dart';
 import 'package:hungry_app/features/cart/view/cart_view.dart';
@@ -49,6 +50,8 @@ class _RootState extends State<Root> {
             borderRadius: BorderRadius.only(
               topLeft: Radius.circular(20),
               topRight: Radius.circular(20),
+              bottomLeft: Radius.circular(20),
+              bottomRight: Radius.circular(20),
             ),
           ),
           child: BottomNavigationBar(

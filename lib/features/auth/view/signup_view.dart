@@ -85,7 +85,6 @@ class _SignupViewState extends State<SignupView> {
               child: Column(
                 children: [
                   Gap(100),
-
                   SizedBox(
                     height: 120,
                     child: Column(
@@ -109,6 +108,8 @@ class _SignupViewState extends State<SignupView> {
                         borderRadius: BorderRadius.only(
                           topLeft: Radius.circular(20),
                           topRight: Radius.circular(20),
+                          bottomLeft: Radius.circular(20),
+                          bottomRight: Radius.circular(20),
                         ),
                       ),
                       child: Padding(
