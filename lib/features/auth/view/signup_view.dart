@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:gap/gap.dart';
 import 'package:hungry_app/core/constant/app_color.dart';
+import 'package:hungry_app/core/constant/strings.dart';
 import 'package:hungry_app/core/network/api_erorr.dart';
 import 'package:hungry_app/features/auth/data/auth_repo.dart';
 import 'package:hungry_app/features/auth/view/login_view.dart';
@@ -45,14 +46,7 @@ class _SignupViewState extends State<SignupView> {
           isLoading = false;
         });
         if (user != null) {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) {
-                return Root();
-              },
-            ),
-          );
+          Navigator.pushReplacementNamed(context, rootRouter);
         }
       } catch (e) {
         setState(() {
@@ -163,13 +157,9 @@ class _SignupViewState extends State<SignupView> {
                                 ),
                                 child: TextButton(
                                   onPressed: () {
-                                    Navigator.pushReplacement(
+                                    Navigator.pushReplacementNamed(
                                       context,
-                                      MaterialPageRoute(
-                                        builder: (n) {
-                                          return LoginView();
-                                        },
-                                      ),
+                                      loginRouter,
                                     );
                                   },
                                   child: CustomText(

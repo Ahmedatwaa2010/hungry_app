@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:hungry_app/core/constant/strings.dart';
 import 'package:hungry_app/features/cart/view/widgets/card.dart';
 import 'package:hungry_app/features/check_out/view/check_out_view.dart';
 import 'package:hungry_app/shared/custom_button.dart';
@@ -79,12 +80,7 @@ class _CartViewState extends State<CartView> {
               child: CustomButton(
                 text: "Check out",
                 onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const CheckOutView(),
-                    ),
-                  );
+                  Navigator.pushNamed(context, checkoutRouter);
                 },
                 width: 200,
                 height: 51,

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:gap/gap.dart';
 import 'package:hungry_app/core/constant/app_color.dart';
+import 'package:hungry_app/core/constant/strings.dart';
 import 'package:hungry_app/core/network/api_erorr.dart';
 import 'package:hungry_app/features/auth/data/auth_repo.dart';
 import 'package:hungry_app/features/auth/view/signup_view.dart';
@@ -40,14 +41,7 @@ class _LoginViewState extends State<LoginView> {
           isLoading = false;
         });
         if (user != null) {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) {
-                return Root();
-              },
-            ),
-          );
+          Navigator.pushReplacementNamed(context, rootRouter);
         }
       } catch (e) {
         setState(() {
@@ -153,13 +147,9 @@ class _LoginViewState extends State<LoginView> {
                                 ),
                                 child: TextButton(
                                   onPressed: () {
-                                    Navigator.pushReplacement(
+                                    Navigator.pushReplacementNamed(
                                       context,
-                                      MaterialPageRoute(
-                                        builder: (n) {
-                                          return SignupView();
-                                        },
-                                      ),
+                                      signupRouter,
                                     );
                                   },
                                   child: CustomText(
@@ -173,13 +163,9 @@ class _LoginViewState extends State<LoginView> {
 
                               TextButton(
                                 onPressed: () {
-                                  Navigator.pushReplacement(
+                                  Navigator.pushReplacementNamed(
                                     context,
-                                    MaterialPageRoute(
-                                      builder: (n) {
-                                        return Root();
-                                      },
-                                    ),
+                                    rootRouter,
                                   );
                                 },
                                 child: CustomText(

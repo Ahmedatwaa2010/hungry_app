@@ -11,7 +11,6 @@ class ProductRepo {
           .map((product) => ProductModel.fromJson(product))
           .toList();
     } catch (e) {
-      print(e.toString());
       return [];
     }
   }

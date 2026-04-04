@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:hungry_app/core/constant/strings.dart';
 import 'package:hungry_app/features/home/view/data/product_model.dart';
 import 'package:hungry_app/features/home/view/data/product_repo.dart';
 import 'package:hungry_app/features/home/view/widgets/card_item.dart';
 import 'package:hungry_app/features/home/view/widgets/food_category.dart';
 import 'package:hungry_app/features/home/view/widgets/search_field.dart';
 import 'package:hungry_app/features/home/view/widgets/user_header.dart';
-import 'package:hungry_app/features/product/view/product_details_view.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 class HomeView extends StatefulWidget {
@@ -107,12 +107,7 @@ class _HomeViewState extends State<HomeView> {
 
                     return GestureDetector(
                       onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const ProductDetailsView(),
-                          ),
-                        );
+                        Navigator.pushNamed(context, productRouter);
                       },
                       child: CardItem(
                         image: product.image ?? "",
