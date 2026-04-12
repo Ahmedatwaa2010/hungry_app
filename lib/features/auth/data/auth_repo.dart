@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:hungry_app/core/constant/strings.dart';
 import 'package:hungry_app/core/network/api_erorr.dart';
 import 'package:hungry_app/core/network/api_exception.dart';
 import 'package:hungry_app/core/network/api_service.dart';
@@ -12,7 +13,7 @@ class AuthRepo {
   // login
   Future<UserModel?> login(String email, String password) async {
     try {
-      final response = await apiService.post("/login", {
+      final response = await apiService.post(loginUrl, {
         "email": email,
         "password": password,
       });
@@ -57,7 +58,7 @@ class AuthRepo {
     String phone,
   ) async {
     try {
-      final response = await apiService.post("/register", {
+      final response = await apiService.post(signupUrl, {
         "name": name,
         "email": email,
         "password": password,
@@ -102,7 +103,7 @@ class AuthRepo {
         return null;
       }
 
-      final response = await apiService.get("/profile");
+      final response = await apiService.get(profileUrl);
       _currentUser = UserModel.fromJson(response["data"]);
       return _currentUser;
     } on DioError catch (erorr) {
@@ -132,7 +133,7 @@ class AuthRepo {
             filename: 'profile.jpg',
           ),
       });
-      final response = await apiService.post('/update-profile', formData);
+      final response = await apiService.post(updateProfileUrl, formData);
       if (response is ApiErorr) {
         throw response;
       }

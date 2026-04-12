@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hungry_app/core/constant/strings.dart';
+import 'package:hungry_app/features/auth/cubit/auth_cubit.dart';
 import 'package:hungry_app/features/auth/view/login_view.dart';
 import 'package:hungry_app/features/auth/view/profile_view.dart';
 import 'package:hungry_app/features/auth/view/signup_view.dart';
@@ -13,15 +14,24 @@ import 'package:hungry_app/root.dart';
 import 'package:hungry_app/splash.dart';
 
 class AppRouter {
-
   Route? generateRoute(RouteSettings settings) {
     switch (settings.name) {
       case splashRouter:
         return MaterialPageRoute(builder: (_) => const SplashView());
       case loginRouter:
-        return MaterialPageRoute(builder: (_) => const LoginView());
+        return MaterialPageRoute(
+          builder: (_) => BlocProvider(
+            create: (_) => AuthCubit(),
+            child: const LoginView(),
+          ),
+        );
       case signupRouter:
-        return MaterialPageRoute(builder: (_) => const SignupView());
+        return MaterialPageRoute(
+          builder: (_) => BlocProvider(
+            create: (_) => AuthCubit(),
+            child: const SignupView(),
+          ),
+        );
       case homeRouter:
         return MaterialPageRoute(builder: (_) => const HomeView());
       case cartRouter:
@@ -39,4 +49,3 @@ class AppRouter {
     }
   }
 }
-

@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gap/gap.dart';
 import 'package:hungry_app/core/constant/app_color.dart';
+import 'package:hungry_app/core/constant/strings.dart';
 import 'package:hungry_app/features/auth/data/auth_repo.dart';
-import 'package:hungry_app/features/auth/view/login_view.dart';
-import 'package:hungry_app/root.dart';
+
 
 class SplashView extends StatefulWidget {
   const SplashView({super.key});
@@ -45,28 +45,16 @@ class _SplashViewState extends State<SplashView>
       final user = await authRepo.autoLogin();
       if (!mounted) return;
       if (authRepo.isGuest) {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (c) => Root()),
-        );
+        Navigator.pushReplacementNamed(context, rootRouter);
       } else if (user != null) {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (c) => Root()),
-        );
+        Navigator.pushReplacementNamed(context, rootRouter);
       } else {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (c) => LoginView()),
-        );
+        Navigator.pushReplacementNamed(context, loginRouter);
       }
     } catch (e) {
       debugPrint('Auto login failed: $e');
       if (mounted) {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (_) => const LoginView()),
-        );
+        Navigator.pushReplacementNamed(context, loginRouter);
       }
     }
   }

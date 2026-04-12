@@ -4,10 +4,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:hungry_app/core/constant/app_color.dart';
+import 'package:hungry_app/core/constant/strings.dart';
 import 'package:hungry_app/core/network/api_erorr.dart';
 import 'package:hungry_app/features/auth/data/auth_repo.dart';
 import 'package:hungry_app/features/auth/data/user_model.dart';
-import 'package:hungry_app/features/auth/view/login_view.dart';
 import 'package:hungry_app/features/auth/widgets/custom_profile_textfield.dart';
 import 'package:hungry_app/features/auth/widgets/profile_btn.dart';
 import 'package:hungry_app/features/check_out/widgets/check_out_widget.dart';
@@ -126,10 +126,7 @@ class _ProfileViewState extends State<ProfileView> {
     try {
       await authRepo.logout();
 
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => const LoginView()),
-      );
+      Navigator.pushNamedAndRemoveUntil(context, loginRouter, (route) => false);
     } catch (e) {
       String message = "unhandeled erorr in logout";
 
@@ -345,10 +342,7 @@ class _ProfileViewState extends State<ProfileView> {
               CustomButton(
                 text: "Login",
                 onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const LoginView()),
-                  );
+                  Navigator.pushNamed(context, loginRouter);
                 },
               ),
             ],

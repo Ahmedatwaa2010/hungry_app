@@ -1,14 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:gap/gap.dart';
 import 'package:hungry_app/core/constant/app_color.dart';
 import 'package:hungry_app/core/constant/strings.dart';
-import 'package:hungry_app/core/network/api_erorr.dart';
-import 'package:hungry_app/features/auth/data/auth_repo.dart';
-import 'package:hungry_app/features/auth/view/signup_view.dart';
+import 'package:hungry_app/features/auth/cubit/auth_cubit.dart';
 import 'package:hungry_app/features/auth/widgets/custom_btn.dart';
-import 'package:hungry_app/root.dart';
 import 'package:hungry_app/shared/custom_snack.dart';
 import 'package:hungry_app/shared/custom_text.dart';
 import 'package:hungry_app/shared/custom_textfield.dart';
@@ -21,51 +19,24 @@ class LoginView extends StatefulWidget {
 }
 
 class _LoginViewState extends State<LoginView> {
-  TextEditingController emailController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
   final GlobalKey<FormState> _key = GlobalKey<FormState>();
-  AuthRepo authRepo = AuthRepo();
-  bool isLoading = false;
 
-  Future<void> login() async {
+  void login() {
     if (_key.currentState!.validate()) {
-      setState(() {
-        isLoading = true;
-      });
-      try {
-        final user = await authRepo.login(
-          emailController.text,
-          passwordController.text,
-        );
-        setState(() {
-          isLoading = false;
-        });
-        if (user != null) {
-          Navigator.pushReplacementNamed(context, rootRouter);
-        }
-      } catch (e) {
-        setState(() {
-          isLoading = false;
-        });
-        String message = "unhandeled erorr in login ";
-        if (e is ApiErorr) {
-          message = e.message;
-        }
-        ScaffoldMessenger.of(context).showSnackBar(customSnack(message));
-        setState(() {
-          isLoading = false;
-        });
-      }
-    } else {
-      return;
+      context.read<AuthCubit>().login(
+        emailController.text,
+        passwordController.text,
+      );
     }
   }
 
   @override
-  void initState() {
-    emailController.text = "Venom@gmail.com";
-    passwordController.text = "123456789";
-    super.initState();
+  void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
   }
 
   @override
@@ -83,12 +54,12 @@ class _LoginViewState extends State<LoginView> {
                 children: [
                   Column(
                     children: [
-                      Gap(100),
+                      const Gap(100),
                       SvgPicture.asset(
                         'assets/logo/logo.svg',
                         color: PrimaryColors.primaryColor,
                       ),
-                      Gap(10),
+                      const Gap(10),
                       CustomText(
                         text: "Welcome to best food app",
                         color: PrimaryColors.primaryColor,
@@ -97,13 +68,13 @@ class _LoginViewState extends State<LoginView> {
                       ),
                     ],
                   ),
-                  Gap(70),
+                  const Gap(70),
 
                   Expanded(
                     child: Container(
                       decoration: BoxDecoration(
                         color: PrimaryColors.primaryColor,
-                        borderRadius: BorderRadius.only(
+                        borderRadius: const BorderRadius.only(
                           topLeft: Radius.circular(20),
                           topRight: Radius.circular(20),
                         ),
@@ -113,31 +84,54 @@ class _LoginViewState extends State<LoginView> {
                         child: SingleChildScrollView(
                           child: Column(
                             children: [
-                              Gap(50),
+                              const Gap(50),
+
                               CustomTextfield(
                                 obscureText: false,
                                 hintText: "Email",
                                 controller: emailController,
                               ),
-                              Gap(40),
+
+                              const Gap(40),
+
                               CustomTextfield(
                                 obscureText: true,
                                 hintText: "Password",
                                 controller: passwordController,
                               ),
-                              Gap(30),
 
-                              isLoading
-                                  ? CupertinoActivityIndicator.partiallyRevealed(
+                              const Gap(30),
+
+                              /// 🔥 Cubit UI
+                              BlocConsumer<AuthCubit, AuthState>(
+                                listener: (context, state) {
+                                  if (state.isSuccsed) {
+                                    Navigator.pushReplacementNamed(
+                                      context,
+                                      rootRouter,
+                                    );
+                                  } else if (state.error != null) {
+                                    ScaffoldMessenger.of(
+                                      context,
+                                    ).showSnackBar(customSnack(state.error!));
+                                  }
+                                },
+                                builder: (context, state) {
+                                  if (state.isLoading) {
+                                    return const CupertinoActivityIndicator(
                                       color: Colors.white,
-                                    )
-                                  : CustomAuthBtn(
-                                      text: "Login",
-                                      onTap: () {
-                                        login();
-                                      },
-                                    ),
-                              Gap(50),
+                                    );
+                                  }
+
+                                  return CustomAuthBtn(
+                                    text: "Login",
+                                    onTap: login,
+                                  );
+                                },
+                              ),
+
+                              const Gap(50),
+
                               Container(
                                 width: double.infinity,
                                 height: 50,
@@ -159,8 +153,7 @@ class _LoginViewState extends State<LoginView> {
                                   ),
                                 ),
                               ),
-                              Gap(50),
-
+                              const Gap(50),
                               TextButton(
                                 onPressed: () {
                                   Navigator.pushReplacementNamed(
@@ -168,8 +161,8 @@ class _LoginViewState extends State<LoginView> {
                                     rootRouter,
                                   );
                                 },
-                                child: CustomText(
-                                  text: "Continue as a geust ?",
+                                child: const CustomText(
+                                  text: "Continue as a guest ?",
                                   fontWeight: FontWeight.bold,
                                   fontSize: 19,
                                   color: Colors.orange,
